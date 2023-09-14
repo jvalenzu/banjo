@@ -7,24 +7,161 @@ sub generate_makefile($);
 
 my @diagrams = (
   {
-    name => 'C major',
+    name => 'A\flat',
     fill => 'blue',
-    open_strings => { 5 => 1, 3 => 1 },
-    notes => [ { coordinate => '4-1', label => 'C' },
-               { coordinate => '2-2', label => 'E' },
-               { coordinate => '5-2', label => 'E' } ]
+    notes => [ { coordinate => '1-1', label => 'E\flat' },
+               { coordinate => '2-1', label => 'C' },
+               { coordinate => '3-1', label => 'A\flat', border => 1 },
+               { coordinate => '4-1', label => 'E\flat' } ]
   },
   {
-    name => 'G major',
+    name => 'A',
+    fill => 'blue',
+    notes => [ { coordinate => '1-2', label => 'E' },
+               { coordinate => '2-2', label => 'C\sharp' },
+               { coordinate => '3-2', label => 'A', border => 1 },
+               { coordinate => '4-2', label => 'E' } ]
+  },
+  {
+    name => 'B\flat',
+    fill => 'blue',
+    notes => [ { coordinate => '1-3', label => 'F' },
+               { coordinate => '2-3', label => 'D' },
+               { coordinate => '3-3', label => 'B\flat', border => 1 },
+               { coordinate => '4-3', label => 'F' } ]
+  },
+  {
+    name => 'B',
+    fill => 'blue',
+    notes => [ { coordinate => '1-4', label => 'F\sharp' },
+               { coordinate => '2-4', label => 'D\sharp' },
+               { coordinate => '3-4', label => 'B', border => 1 },
+               { coordinate => '4-4', label => 'F\sharp' } ]
+  },
+  {
+    name => 'C',
+    fill => 'blue',
+    open_strings => { 3 => 1 },
+    notes => [ { coordinate => '2-1', label => 'C', border => 1 },
+               { coordinate => '1-2', label => 'E' },
+               { coordinate => '4-2', label => 'E' } ]
+  },
+  {
+    name => 'C\sharp',
+    fill => 'blue',
+    notes => [ { coordinate => '1-3', label => 'F' },
+               { coordinate => '4-3', label => 'F' },
+               { coordinate => '2-2', label => 'C\sharp', border => 1 },
+               { coordinate => '3-1', label => 'G\sharp' } ]
+  },
+  {
+    name => 'C major 7',
+    fill => 'blue',
+    notes => [ { coordinate => '2-1', label => 'C', border => 1 },
+               { coordinate => '1-2', label => 'E' },
+               { coordinate => '3-4', label => 'B' },
+               { coordinate => '4-2', label => 'E' } ]
+  },
+  {
+    name => 'C major 7 fingering',
+    fill => 'blue',
+    notes => [ { coordinate => '2-1', label => '1' },
+               { coordinate => '1-2', label => '3' },
+               { coordinate => '3-4', label => '4' },
+               { coordinate => '4-2', label => '2' } ]
+  },
+  {
+    name => 'D\flat',
+    fill => 'blue',
+    notes => [ { coordinate => '1-3', label => 'F' },
+               { coordinate => '2-2', label => 'D\flat', border => 1 },
+               { coordinate => '3-1', label => 'A\flat' },
+               { coordinate => '4-3', label => 'F' },
+        ]
+  },
+  {
+    name => 'D',
+    fill => 'blue',
+    notes => [ { coordinate => '1-4', label => 'F\sharp' },
+               { coordinate => '2-3', label => 'D', border => 1 },
+               { coordinate => '3-2', label => 'A' },
+               { coordinate => '4-4', label => 'F\sharp' },
+        ]
+  },
+  {
+    name => 'D\sharp',
+    fill => 'blue',
+    start_fret => 3,
+    notes => [ { coordinate => '1-5', label => 'G' },
+               { coordinate => '2-4', label => 'D\sharp', border => 1 },
+               { coordinate => '3-3', label => 'A\sharp' },
+               { coordinate => '4-5', label => 'G' },
+        ]
+  },
+  {
+    name => 'E\flat',
+    fill => 'blue',
+    start_fret => 3,
+    notes => [ { coordinate => '1-5', label => 'G' },
+               { coordinate => '2-4', label => 'E\flat', border => 1 },
+               { coordinate => '3-3', label => 'B\flat' },
+               { coordinate => '4-5', label => 'G' },
+        ]
+  },
+  {
+    name => 'E',
+    fill => 'blue',
+    open_strings => { 2 => 1 },
+    notes => [ { coordinate => '1-2', label => 'E', border => 1 },
+               { coordinate => '3-1', label => 'G\sharp' },
+               { coordinate => '4-2', label => 'E', border => 1 },
+        ]
+  },
+  {
+    name => 'F\sharp',
+    fill => 'blue',
+    start_fret => 2,
+    notes => [ { coordinate => '1-4', label => 'F\sharp', border => 1 },
+               { coordinate => '4-4', label => 'F\sharp', border => 1 },
+               { coordinate => '2-2', label => 'C\sharp' },
+               { coordinate => '3-3', label => 'A\sharp' } ]
+  },  
+  {
+    name => 'F',
+    fill => 'blue',
+    notes => [ { coordinate => '1-3', label => 'F', border => 1 },
+               { coordinate => '2-1', label => 'C' },
+               { coordinate => '3-2', label => 'A' },
+               { coordinate => '4-3', label => 'F', border => 1 }
+        ]
+  },  
+  {
+    name => 'G\flat',
+    fill => 'blue',
+    start_fret => 2,
+    notes => [ { coordinate => '1-4', label => 'G\flat', border => 1 },
+               { coordinate => '2-2', label => 'D\flat' },
+               { coordinate => '3-3', label => 'B\flat' },
+               { coordinate => '4-4', label => 'G\flat', border => 1 } ]
+  },
+  {
+    name => 'G',
     fill => 'blue',
     open_strings => { 5 => 1 },
     start_fret => 3,
-    notes => [ { coordinate => '4-3', label => 'D' },
-               { coordinate => '5-5', label => 'G' },
-               { coordinate => '2-5', label => 'G' },
+    notes => [ { coordinate => '1-5', label => 'G', border => 1 },
+               { coordinate => '4-5', label => 'G', border => 1 },
+               { coordinate => '2-3', label => 'D' },
                { coordinate => '3-4', label => 'B' } ]
+  },
+  {
+    name => 'G\sharp',
+    fill => 'blue',
+    notes => [ { coordinate => '1-1', label => 'D\sharp' },
+               { coordinate => '2-1', label => 'C' },
+               { coordinate => '3-1', label => 'G\sharp', border => 1 },
+               { coordinate => '4-1', label => 'D\sharp' } ]
   }
-  
     );
 
 my @fnames = ();
@@ -32,34 +169,74 @@ my @fnames = ();
 foreach my $diagram (@diagrams)
 {
   (my $fname = $diagram->{name}) =~ s/ /_/g;
+  $fname =~ s/\\flat/♭/g;
+  $fname =~ s/\\sharp/♯/g;
 
   push @fnames, $fname;
   
-  open(my $fh, '>', "$fname.tex") or die $!;
+  open(my $fh, '>', $fname.".tex") or die $!;
   print $fh generate_chord_diagram($diagram);
   close($fh);
 }
+
+{
+  open(my $fh, '>', "Docs/Chords.md") or die $!;
+  for (my $i=0; $i<=$#diagrams; ++$i)
+  {
+    my $diagram = $diagrams[$i];
+    my $fname = $fnames[$i];
+    (my $label = $fname) =~ s/_/ /g;
+    
+    print $fh "<div style=\"display: flex; align-items: center\">\n";
+    print $fh "  <div style=\"width: 5em;\">\n";
+    print $fh "  <b>$label</b>\n";
+    print $fh "  </div>\n";
+    print $fh "  <div>\n";
+    print $fh "![]($fname\.png \"$label\")\n";
+    print $fh "  </div>\n";
+    print $fh "</div>\n";
+    print $fh "<br>\n";
+    
+  }
+  close($fh);
+}
+
 
 generate_makefile(\@fnames);
 
 sub generate_makefile($)
 {
   my $fnames = shift;
-
-  my $pdfs = join '', map { $_ . ".pdf " } @{$fnames};
-  my $dvis = join '', map { $_ . ".dvi " } @{$fnames};
-
-  my $out = "";
   
-  $out .= "test: $pdfs\n";
+  my $auxs = join ' ', map { "$_.aux"; } @{$fnames};
+  my $logs = join ' ', map { "$_.log"; } @{$fnames};
+  my $pdfs = join ' ', map { "$_.pdf"; } @{$fnames};
+  my $pngs = join ' ', map { "$_.png"; } @{$fnames};
+  my $dvis = join ' ', map { "$_.dvi"; } @{$fnames};
+  my $texes = join ' ', map { "$_.tex"; } @{$fnames};
+  
+  my $out = "";
+
+  
+  
+  $out .= "DOCSDIR=Docs\n";
+  $out .= "FINALPNG=\$(foreach p,$pngs,\$(DOCSDIR)/\$(p))\n";
+  $out .= "\n";
+  $out .= "test: \$(FINALPNG)\n";
   $out .= "\n";
   $out .= "%.pdf : %.dvi\n";
   $out .= "	dvipdf \$<\n";
   $out .= "\n";
+  $out .= "\$(DOCSDIR)/%.png : %.pdf\n";
+  $out .= "	convert -density 300 \$< \$\@\n";
+  $out .= "\n";
   $out .= "%.dvi : %.tex\n";
   $out .= "	latex \$<\n";
   $out .= "clean:\n";
-  $out .= "\trm -f $pdfs $dvis\n";
+  $out .= "\trm -f $pdfs $pngs $dvis $auxs $logs $texes\n";
+  $out .= "\n";
+  $out .= "distclean: clean\n";
+  $out .= "\trm -f \$(FINALPNG)\n";
 
   open(my $fh, '>', "Makefile") or die $!;
   print $fh $out;
@@ -89,11 +266,13 @@ sub generate_chord_diagram($)
     my $coordinate = $note->{coordinate};
     my ($string, $fret) = split /-/, $coordinate;
     $last_fret = $last_fret < $fret ? $fret : $last_fret;
+
+    $note->{coordinate} = (6-$string).'-'.$fret;
   }
 
   my $first_interval_end = $last_fret > 4 ? 4 : $last_fret;
-  my $draw_fifth_string = $last_fret >= 5 ? 1 : 0;
-
+  my $draw_fifth_string = $last_fret > 5 ? 1 : 0;
+  
   # move this because we may not be drawing the first fret
   my $fifth_nut_start = 0.94387431268**(6-$start_fret);
   my $template = <<HERE;
@@ -197,12 +376,12 @@ $template .= <<'HERE';
 HERE
   }
 
-$template .= <<'HERE';  
+$template .= <<'HERE';
   \end{scope}
 HERE
-
+  
   my @circles = (3,5,7,9,15,17);
-  while ($#circles>0 && $circles[0] > $start_fret)
+  while ($#circles>=0 && $circles[0] < $start_fret)
   {
     shift @circles;
   }
@@ -215,7 +394,7 @@ HERE
       last;
     }
   }
-
+  
   my $circle_string = "{".join(',',@circles)."}";
   my $twelve_string = $last_fret > 12 ? "{12}" : "{}";
 
@@ -228,18 +407,18 @@ $template .= <<HERE;
     \\draw[black!20,fill=black!20] (plushalf2-12) circle (.08) (plushalf4-12) circle (.08);
   }
 HERE
-
+  
   if ($start_fret > 1)
   {
     $template .= "  \\draw[black!50, text=black] (fret$start_fret) node {\\tiny $start_fret };\n";    
   }
-
-#open_strings    
-
+  
+  # open_strings
+  
   $template .= "  %% label nut\n";
   if ($open_strings->{1})
   {
-    $template .= "  \\draw[black!50, text=black, fill=blue!15] (Nut-5) circle [radius=.15] node {\\tiny D};\n";
+    $template .= "  \\draw[black!50, text=black, fill=$fill!15] (Nut-5) circle [radius=.15] node {\\tiny D};\n";
   }
   else
   {
@@ -248,31 +427,31 @@ HERE
 
   if ($open_strings->{2})
   {
-    $template .= "  \\draw[black!50, text=black, fill=blue!15] (Nut-4) circle [radius=.15] node {\\tiny B};\n";
+    $template .= "  \\draw[black!50, text=black, fill=$fill!15] (Nut-4) circle [radius=.15] node {\\tiny B};\n";
   }
   else
   {
     $template .= "  \\draw[black!100] (Nut-4) node {\\tiny B};\n";
   }
-
+  
   if ($open_strings->{3})
   {
-    $template .= "  \\draw[black!50, text=black, fill=blue!15] (Nut-3) circle [radius=.15] node {\\tiny G};\n";
+    $template .= "  \\draw[black!50, text=black, fill=$fill!15] (Nut-3) circle [radius=.15] node {\\tiny G};\n";
   }
   else
   {
     $template .= "  \\draw[black!100] (Nut-3) node {\\tiny G};\n";
   }
-
+  
   if ($open_strings->{4})
   {
-    $template .= "  \\draw[black!50, text=black, fill=blue!15] (Nut-2) circle [radius=.15] node {\\tiny D};\n";
+    $template .= "  \\draw[black!50, text=black, fill=$fill!15] (Nut-2) circle [radius=.15] node {\\tiny D};\n";
   }
   else
   {
     $template .= "  \\draw[black!100] (Nut-2) node {\\tiny D};\n";
   }
-
+  
   if ($open_strings->{4} && $draw_fifth_string)
   {
     $template .= "  \\draw[black!50, text=black] (Nut-1) circle [radius=.15] node {\\tiny G};\n";
@@ -284,20 +463,20 @@ HERE
   
   $template .="    % do a $name chord\n";
 
-  {
-    my $note = shift @{ $notes };
-    my $coordinate = $note->{'coordinate'};
-    my $label = $note->{'label'};
-    
-    $template .= "  \\draw[black!100,fill=$fill!15]            ($coordinate) circle [radius=.15] node {\\tiny $label};\n";
-  }
-
   foreach my $note (@{ $notes })
   { 
     my $coordinate = $note->{'coordinate'};
     my $label = $note->{'label'};
-    
-    $template .= "  \\draw[black!40, text=black,fill=$fill!15] ($coordinate) circle [radius=.15] node {\\tiny $label};\n";
+    my $border = defined($note->{'border'}) ? $note->{'border'} : 0;
+
+    if ($border)
+    {
+      $template .= "  \\draw[black!100,fill=$fill!15]            ($coordinate) circle [radius=.15] node {\\tiny \$$label\$};\n";
+    }
+    else
+    {
+      $template .= "  \\draw[black!40, text=black,fill=$fill!15] ($coordinate) circle [radius=.15] node {\\tiny \$$label\$};\n";
+    }
   }
   
   $template .= "\n";
