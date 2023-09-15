@@ -192,7 +192,9 @@ foreach my $diagram (@diagrams)
     print $fh "  <b>$label</b>\n";
     print $fh "  </div>\n";
     print $fh "  <div>\n";
+    print $fh "\n";
     print $fh "![\"$label\"]($fname\.png)\n";
+    print $fh "\n";
     print $fh "  </div>\n";
     print $fh "</div>\n";
     print $fh "<br>\n";
