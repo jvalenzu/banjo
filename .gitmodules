@@ -1,0 +1,3 @@
+[submodule "External/genanki"]
+	path = External/genanki
+	url = https://github.com/kerrickstaley/genanki.git

@@ -4,6 +4,7 @@ use strict;
 
 sub generate_chord_diagram($);
 sub generate_makefile($);
+sub generate_anki($);
 
 my @diagrams = (
   {
@@ -205,6 +206,7 @@ foreach my $diagram (@diagrams)
 
 
 generate_makefile(\@fnames);
+generate_anki(\@diagrams);
 
 sub generate_makefile($)
 {
@@ -487,3 +489,86 @@ HERE
 
   return $template;
 }
+
+sub generate_anki($)
+{
+  my $diagrams = shift;
+
+  my $pyt;
+  {
+    local $/ = undef;
+    $pyt = <DATA>;
+  }
+
+  my @syms = map
+  {
+    my $t0 = $_->{'name'};
+    (my $t1 = $t0) =~ s/\\flat/♭/g;
+    (my $t2 = $t1) =~ s/\\sharp/♯/g;
+    $t2;
+  } @{ $diagrams };
+
+  my @pngs = map
+  {
+    (my $t0 = $_) =~ s/ /_/g;
+    $t0.".png";
+  } @syms;
+  
+  my $interleaved = "";
+  my $copy_files = "";
+
+  for (my $i=0; $i<=$#syms; ++$i)
+  {
+    $interleaved .= "  deck.add_note(genanki.Note(model, [ '$syms[$i]', '<img src=\"$pngs[$i]\">' ]))\n";
+    $copy_files  .= "  shutil.copy(cwd+'/../Docs/$pngs[$i]', '.')\n";
+  }
+
+  my $notes = $interleaved . $copy_files;
+
+  my $media_files = join ',', map { "'$_'" } @pngs;
+  
+  $pyt =~ s/__MEDIA_FILES__/$media_files/;
+  $pyt =~ s/__NOTES__/$notes/;
+
+  mkdir "build";
+  open(my $fh, '>', "build/generate_anki_deck.py") or die $!;
+  print $fh $pyt;
+  close($fh);
+  
+  return $pyt;
+}
+
+
+__DATA__
+import shutil
+import datetime
+import os
+import tempfile
+import textwrap
+import warnings
+import itertools
+import time
+import sys
+sys.path.insert(1, '../External/genanki')
+import genanki
+
+def test_media_files_in_subdirs():
+  deck_id = 1694391122062
+
+  # change to a scratch directory so we can write files
+  cwd = os.getcwd()
+  os.chdir(tempfile.mkdtemp())
+  
+  deck = genanki.Deck(deck_id, 'Default (G) Tuning Banjo Chords')
+  model = genanki.Model(deck_id, 'Simple Banjo Model',
+                        fields=[{ 'name':'Question' }, { 'name':'Answer' }],
+                        templates=[{'name': 'Card 1', 'qfmt': '{{Question}}', 'afmt': '{{Answer}}'}])
+
+__NOTES__
+  
+  # populate files with data
+  package = genanki.Package(deck, media_files=[ __MEDIA_FILES__ ])
+  package.write_to_file(cwd+'/banjo_chords.apkg')
+
+if __name__ == '__main__':
+  test_media_files_in_subdirs()
