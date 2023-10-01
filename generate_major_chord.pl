@@ -300,7 +300,7 @@ foreach my $diagram (@diagrams)
 }
 
 {
-  open(my $fh, '>', "Docs/Chords.md") or die $!;
+  open(my $fh, '>', "build/Docs/Chords.md") or die $!;
   for (my $i=0; $i<=$#diagrams; ++$i)
   {
     my $diagram = $diagrams[$i];
