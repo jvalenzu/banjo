@@ -285,6 +285,7 @@ my @diagrams = (
 
 my @fnames = ();
 
+mkdir "build";
 foreach my $diagram (@diagrams)
 {
   (my $fname = $diagram->{name}) =~ s/ /_/g;
@@ -292,8 +293,8 @@ foreach my $diagram (@diagrams)
   $fname =~ s/\\sharp/♯/g;
 
   push @fnames, $fname;
-  
-  open(my $fh, '>', $fname.".tex") or die $!;
+
+  open(my $fh, '>', 'build/'.$fname.".tex") or die $!;
   print $fh generate_chord_diagram($diagram);
   close($fh);
 }
@@ -360,7 +361,8 @@ sub generate_makefile($)
   $out .= "distclean: clean\n";
   $out .= "\trm -f \$(FINALPNG)\n";
 
-  open(my $fh, '>', "Makefile") or die $!;
+  mkdir "build";
+  open(my $fh, '>', "build/Makefile") or die $!;
   print $fh $out;
   close($fh);
 }
