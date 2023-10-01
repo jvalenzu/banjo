@@ -459,10 +459,10 @@ HERE
 HERE
   }
 
-  if ($last_fret >= 5)
+  if ($start_fret < $last_fret && $last_fret >= 5)
   {
     $template .= <<HERE;
-    \\foreach \\fret in {5,...,$last_fret}{
+    \\foreach \\fret in {$start_fret,...,$last_fret}{
 HERE
     $template .= <<'HERE';
       %% define coordinate for fret label
