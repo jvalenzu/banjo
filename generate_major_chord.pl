@@ -459,10 +459,16 @@ HERE
 HERE
   }
 
-  if ($start_fret < $last_fret && $last_fret >= 5)
+  if ($last_fret >= 5)
   {
+    my $second_interval_start = 5;
+    if ($start_fret > 5)
+    {
+      $second_interval_start = $start_fret;
+    }
+    
     $template .= <<HERE;
-    \\foreach \\fret in {$start_fret,...,$last_fret}{
+    \\foreach \\fret in {$second_interval_start,...,$last_fret}{
 HERE
     $template .= <<'HERE';
       %% define coordinate for fret label
