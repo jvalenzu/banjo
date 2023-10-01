@@ -2,3 +2,5 @@
 *.log
 *.pdf
 build
+.DS_Store
+External/.DS_Store
