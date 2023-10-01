@@ -24,9 +24,27 @@ my @diagrams = (
                { coordinate => '4-2', label => 'E' } ]
   },
   {
+    name => 'Amaj7',
+    fill => 'blue',
+    start_fret => 2,
+    notes => [ { coordinate => '1-6', label => 'G\sharp' },
+               { coordinate => '2-2', label => 'C\sharp' },
+               { coordinate => '3-2', label => 'A', border => 1 },
+               { coordinate => '4-2', label => 'E' } ]
+  },
+  {
     name => 'B\flat',
     fill => 'blue',
     notes => [ { coordinate => '1-3', label => 'F' },
+               { coordinate => '2-3', label => 'D' },
+               { coordinate => '3-3', label => 'B\flat', border => 1 },
+               { coordinate => '4-3', label => 'F' } ]
+  },
+  {
+    name => 'B\flatmaj7',
+    fill => 'blue',
+    start_fret => 3,
+    notes => [ { coordinate => '1-7', label => 'A' },
                { coordinate => '2-3', label => 'D' },
                { coordinate => '3-3', label => 'B\flat', border => 1 },
                { coordinate => '4-3', label => 'F' } ]
@@ -40,36 +58,45 @@ my @diagrams = (
                { coordinate => '4-4', label => 'F\sharp' } ]
   },
   {
+    name => 'Bmaj7',
+    fill => 'blue',
+    start_fret => 4,
+    notes => [ { coordinate => '1-8', label => 'A\sharp' },
+               { coordinate => '2-4', label => 'D\sharp' },
+               { coordinate => '3-4', label => 'B', border => 1 },
+               { coordinate => '4-4', label => 'F\sharp' } ]
+  },
+  {
     name => 'C',
     fill => 'blue',
     open_strings => { 3 => 1 },
-    notes => [ { coordinate => '2-1', label => 'C', border => 1 },
-               { coordinate => '1-2', label => 'E' },
+    notes => [ { coordinate => '1-2', label => 'E' },
+               { coordinate => '2-1', label => 'C', border => 1 },
+               { coordinate => '4-2', label => 'E' } ]
+  },
+  {
+    name => 'Cmaj7',
+    fill => 'blue',
+    notes => [ { coordinate => '1-2', label => 'E' },
+               { coordinate => '2-1', label => 'C', border => 1 },
+               { coordinate => '3-4', label => 'B' },
                { coordinate => '4-2', label => 'E' } ]
   },
   {
     name => 'C\sharp',
     fill => 'blue',
     notes => [ { coordinate => '1-3', label => 'F' },
-               { coordinate => '4-3', label => 'F' },
                { coordinate => '2-2', label => 'C\sharp', border => 1 },
-               { coordinate => '3-1', label => 'G\sharp' } ]
+               { coordinate => '3-1', label => 'G\sharp' },
+               { coordinate => '4-3', label => 'F' } ]
   },
   {
-    name => 'C major 7',
+    name => 'C\sharpmaj7',
     fill => 'blue',
-    notes => [ { coordinate => '2-1', label => 'C', border => 1 },
-               { coordinate => '1-2', label => 'E' },
-               { coordinate => '3-4', label => 'B' },
-               { coordinate => '4-2', label => 'E' } ]
-  },
-  {
-    name => 'C major 7 fingering',
-    fill => 'blue',
-    notes => [ { coordinate => '2-1', label => '1' },
-               { coordinate => '1-2', label => '3' },
-               { coordinate => '3-4', label => '4' },
-               { coordinate => '4-2', label => '2' } ]
+    notes => [ { coordinate => '1-3', label => 'F' },
+               { coordinate => '2-2', label => 'C\sharp', border => 1 },
+               { coordinate => '3-5', label => 'B\sharp' },
+               { coordinate => '4-3', label => 'F' } ]
   },
   {
     name => 'D\flat',
@@ -81,12 +108,31 @@ my @diagrams = (
         ]
   },
   {
+    name => 'D\flatmaj7',
+    fill => 'blue',
+    start_fret => 6,
+    notes => [ { coordinate => '1-10', label => 'C' },
+               { coordinate => '2-6', label => 'F' },
+               { coordinate => '3-6', label => 'D\flat', border => 1 },
+               { coordinate => '4-6', label => 'A\flat' },
+        ]
+  },
+  {
     name => 'D',
     fill => 'blue',
     notes => [ { coordinate => '1-4', label => 'F\sharp' },
                { coordinate => '2-3', label => 'D', border => 1 },
                { coordinate => '3-2', label => 'A' },
                { coordinate => '4-4', label => 'F\sharp' },
+        ]
+  },
+  {
+    name => 'Dmaj7',
+    fill => 'blue',
+    open_strings => { 4 => 1 },
+    notes => [ { coordinate => '1-4', label => 'F\sharp' },
+               { coordinate => '2-2', label => 'C\sharp' },
+               { coordinate => '3-2', label => 'A' }
         ]
   },
   {
@@ -100,6 +146,15 @@ my @diagrams = (
         ]
   },
   {
+    name => 'D\sharpmaj7',
+    fill => 'blue',
+    notes => [ { coordinate => '1-5', label => 'G' },
+               { coordinate => '2-2', label => 'C\sharp' },
+               { coordinate => '3-3', label => 'A\sharp' },
+               { coordinate => '4-1', label => 'D\sharp', border => 1 },
+        ]
+  },
+  {
     name => 'E\flat',
     fill => 'blue',
     start_fret => 3,
@@ -107,6 +162,15 @@ my @diagrams = (
                { coordinate => '2-4', label => 'E\flat', border => 1 },
                { coordinate => '3-3', label => 'B\flat' },
                { coordinate => '4-5', label => 'G' },
+        ]
+  },
+  {
+    name => 'E\flatmaj7',
+    fill => 'blue',
+    notes => [ { coordinate => '1-5', label => 'G' },
+               { coordinate => '2-3', label => 'D' },
+               { coordinate => '3-3', label => 'B\flat' },
+               { coordinate => '4-1', label => 'E\flat', border => 1 },
         ]
   },
   {
@@ -119,14 +183,14 @@ my @diagrams = (
         ]
   },
   {
-    name => 'F\sharp',
+    name => 'Emaj7',
     fill => 'blue',
-    start_fret => 2,
-    notes => [ { coordinate => '1-4', label => 'F\sharp', border => 1 },
-               { coordinate => '4-4', label => 'F\sharp', border => 1 },
-               { coordinate => '2-2', label => 'C\sharp' },
-               { coordinate => '3-3', label => 'A\sharp' } ]
-  },  
+    open_strings => { 2 => 1 },
+    notes => [ { coordinate => '1-1', label => 'E\sharp' },
+               { coordinate => '3-1', label => 'G\sharp' },
+               { coordinate => '4-2', label => 'E', border => 1 },
+        ]
+  },
   {
     name => 'F',
     fill => 'blue',
@@ -135,7 +199,36 @@ my @diagrams = (
                { coordinate => '3-2', label => 'A' },
                { coordinate => '4-3', label => 'F', border => 1 }
         ]
-  },  
+  },
+  {
+    name => 'Fmaj7',
+    fill => 'blue',
+    notes => [ { coordinate => '1-2', label => 'E' },
+               { coordinate => '2-1', label => 'C' },
+               { coordinate => '3-2', label => 'A' },
+               { coordinate => '4-3', label => 'F', border => 1 }
+        ]
+  },
+  {
+    name => 'F\sharp',
+    fill => 'blue',
+    start_fret => 2,
+    notes => [ { coordinate => '1-4', label => 'F\sharp', border => 1 },
+               { coordinate => '2-2', label => 'C\sharp' },
+               { coordinate => '3-3', label => 'A\sharp' },
+               { coordinate => '4-4', label => 'F\sharp', border => 1 }
+        ]
+  },
+  {
+    name => 'F\sharpmaj7',
+    fill => 'blue',
+    start_fret => 2,
+    notes => [ { coordinate => '1-3', label => 'F' },
+               { coordinate => '2-2', label => 'C\sharp' },
+               { coordinate => '3-3', label => 'A\sharp' },
+               { coordinate => '4-4', label => 'F\sharp', border => 1 }
+        ]
+  },
   {
     name => 'G\flat',
     fill => 'blue',
@@ -146,14 +239,30 @@ my @diagrams = (
                { coordinate => '4-4', label => 'G\flat', border => 1 } ]
   },
   {
+    name => 'G\flatmaj7',
+    fill => 'blue',
+    start_fret => 2,
+    notes => [ { coordinate => '1-3', label => 'F' },
+               { coordinate => '2-2', label => 'D\flat' },
+               { coordinate => '3-3', label => 'B\flat' },
+               { coordinate => '4-4', label => 'G\flat', border => 1 } ]
+  },
+  {
     name => 'G',
     fill => 'blue',
     open_strings => { 5 => 1 },
     start_fret => 3,
     notes => [ { coordinate => '1-5', label => 'G', border => 1 },
-               { coordinate => '4-5', label => 'G', border => 1 },
                { coordinate => '2-3', label => 'D' },
-               { coordinate => '3-4', label => 'B' } ]
+               { coordinate => '3-4', label => 'B' },
+               { coordinate => '4-5', label => 'G', border => 1 }
+        ]
+  },
+  {
+    name => 'Gmaj7',
+    fill => 'blue',
+    open_strings => { 5 => 1, 4 => 1, 3 => 1, 2 => 1 },
+    notes => [ { coordinate => '1-4', label => 'F\sharp' } ]
   },
   {
     name => 'G\sharp',
@@ -162,6 +271,15 @@ my @diagrams = (
                { coordinate => '2-1', label => 'C' },
                { coordinate => '3-1', label => 'G\sharp', border => 1 },
                { coordinate => '4-1', label => 'D\sharp' } ]
+  },
+  {
+    name => 'G\sharpmaj7',
+    fill => 'blue',
+    start_fret => 3,
+    notes => [ { coordinate => '1-5', label => 'F\sharp' },
+               { coordinate => '2-4', label => 'D\sharp' },
+               { coordinate => '3-5', label => 'B\sharp' },
+               { coordinate => '4-6', label => 'G\sharp', border => 1 } ]
   }
     );
 
@@ -345,6 +463,9 @@ HERE
     \\foreach \\fret in {5,...,$last_fret}{
 HERE
     $template .= <<'HERE';
+      %% define coordinate for fret label
+      \fretname[\fret];
+
       %% Set coordinate for each string
       \foreach \str in {1,...,5}{
         \coordinate (\str-\fret) at (0.97193715634*\x,\str);
