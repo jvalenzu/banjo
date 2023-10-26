@@ -4,12 +4,20 @@ use strict;
 
 sub generate_chord_diagram($);
 sub generate_makefile($);
-sub generate_anki($);
+sub generate_anki($;$;$);
+
+use constant TRIAD => 0x01;
+use constant MAJ7  => 0x02;
+use constant FLAT  => 0x10;
+use constant SHARP => 0x20;
+my $data_offset = tell DATA;
 
 my @diagrams = (
   {
     name => 'A\flat',
+    caption => 'First Position',
     fill => 'blue',
+    flags => FLAT | TRIAD,
     notes => [ { coordinate => '1-1', label => 'E\flat' },
                { coordinate => '2-1', label => 'C' },
                { coordinate => '3-1', label => 'A\flat', border => 1 },
@@ -17,7 +25,9 @@ my @diagrams = (
   },
   {
     name => 'A',
+    caption => 'First Position',
     fill => 'blue',
+    flags => TRIAD,
     notes => [ { coordinate => '1-2', label => 'E' },
                { coordinate => '2-2', label => 'C\sharp' },
                { coordinate => '3-2', label => 'A', border => 1 },
@@ -25,7 +35,9 @@ my @diagrams = (
   },
   {
     name => 'Amaj7',
+    caption => 'First Position',
     fill => 'blue',
+    flags => MAJ7,
     start_fret => 2,
     notes => [ { coordinate => '1-6', label => 'G\sharp' },
                { coordinate => '2-2', label => 'C\sharp' },
@@ -34,7 +46,9 @@ my @diagrams = (
   },
   {
     name => 'B\flat',
+    caption => 'First Position',
     fill => 'blue',
+    flags => FLAT | TRIAD,
     notes => [ { coordinate => '1-3', label => 'F' },
                { coordinate => '2-3', label => 'D' },
                { coordinate => '3-3', label => 'B\flat', border => 1 },
@@ -42,7 +56,9 @@ my @diagrams = (
   },
   {
     name => 'B\flatmaj7',
+    caption => 'First Position',
     fill => 'blue',
+    flags => MAJ7 | FLAT,
     start_fret => 3,
     notes => [ { coordinate => '1-7', label => 'A' },
                { coordinate => '2-3', label => 'D' },
@@ -51,7 +67,9 @@ my @diagrams = (
   },
   {
     name => 'B',
+    caption => 'First Position',
     fill => 'blue',
+    flags => TRIAD,
     notes => [ { coordinate => '1-4', label => 'F\sharp' },
                { coordinate => '2-4', label => 'D\sharp' },
                { coordinate => '3-4', label => 'B', border => 1 },
@@ -59,8 +77,10 @@ my @diagrams = (
   },
   {
     name => 'Bmaj7',
+    caption => 'First Position',
     fill => 'blue',
     start_fret => 4,
+    flags => MAJ7,
     notes => [ { coordinate => '1-8', label => 'A\sharp' },
                { coordinate => '2-4', label => 'D\sharp' },
                { coordinate => '3-4', label => 'B', border => 1 },
@@ -68,7 +88,9 @@ my @diagrams = (
   },
   {
     name => 'C',
+    caption => 'First Position',
     fill => 'blue',
+    flags => TRIAD,
     open_strings => { 3 => 1 },
     notes => [ { coordinate => '1-2', label => 'E' },
                { coordinate => '2-1', label => 'C', border => 1 },
@@ -76,7 +98,9 @@ my @diagrams = (
   },
   {
     name => 'Cmaj7',
+    caption => 'First Position',
     fill => 'blue',
+    flags => MAJ7,
     notes => [ { coordinate => '1-2', label => 'E' },
                { coordinate => '2-1', label => 'C', border => 1 },
                { coordinate => '3-4', label => 'B' },
@@ -84,7 +108,9 @@ my @diagrams = (
   },
   {
     name => 'C\sharp',
+    caption => 'First Position',
     fill => 'blue',
+    flags => TRIAD | SHARP,
     notes => [ { coordinate => '1-3', label => 'F' },
                { coordinate => '2-2', label => 'C\sharp', border => 1 },
                { coordinate => '3-1', label => 'G\sharp' },
@@ -92,7 +118,9 @@ my @diagrams = (
   },
   {
     name => 'C\sharpmaj7',
+    caption => 'First Position',
     fill => 'blue',
+    flags => MAJ7 | SHARP,
     notes => [ { coordinate => '1-3', label => 'F' },
                { coordinate => '2-2', label => 'C\sharp', border => 1 },
                { coordinate => '3-5', label => 'B\sharp' },
@@ -100,7 +128,9 @@ my @diagrams = (
   },
   {
     name => 'D\flat',
+    caption => 'First Position',
     fill => 'blue',
+    flags => TRIAD | FLAT,
     notes => [ { coordinate => '1-3', label => 'F' },
                { coordinate => '2-2', label => 'D\flat', border => 1 },
                { coordinate => '3-1', label => 'A\flat' },
@@ -109,8 +139,10 @@ my @diagrams = (
   },
   {
     name => 'D\flatmaj7',
+    caption => 'First Position',
     fill => 'blue',
     start_fret => 6,
+    flags => MAJ7 | FLAT,
     notes => [ { coordinate => '1-10', label => 'C' },
                { coordinate => '2-6', label => 'F' },
                { coordinate => '3-6', label => 'D\flat', border => 1 },
@@ -119,7 +151,9 @@ my @diagrams = (
   },
   {
     name => 'D',
+    caption => 'First Position',
     fill => 'blue',
+    flags => TRIAD,
     notes => [ { coordinate => '1-4', label => 'F\sharp' },
                { coordinate => '2-3', label => 'D', border => 1 },
                { coordinate => '3-2', label => 'A' },
@@ -128,7 +162,9 @@ my @diagrams = (
   },
   {
     name => 'Dmaj7',
+    caption => 'First Position',
     fill => 'blue',
+    flags => MAJ7,
     open_strings => { 4 => 1 },
     notes => [ { coordinate => '1-4', label => 'F\sharp' },
                { coordinate => '2-2', label => 'C\sharp' },
@@ -137,8 +173,10 @@ my @diagrams = (
   },
   {
     name => 'D\sharp',
+    caption => 'First Position',
     fill => 'blue',
     start_fret => 3,
+    flags => TRIAD | SHARP,
     notes => [ { coordinate => '1-5', label => 'G' },
                { coordinate => '2-4', label => 'D\sharp', border => 1 },
                { coordinate => '3-3', label => 'A\sharp' },
@@ -147,7 +185,9 @@ my @diagrams = (
   },
   {
     name => 'D\sharpmaj7',
+    caption => 'First Position',
     fill => 'blue',
+    flags => MAJ7 | SHARP,
     notes => [ { coordinate => '1-5', label => 'G' },
                { coordinate => '2-2', label => 'C\sharp' },
                { coordinate => '3-3', label => 'A\sharp' },
@@ -156,8 +196,10 @@ my @diagrams = (
   },
   {
     name => 'E\flat',
+    caption => 'First Position',
     fill => 'blue',
     start_fret => 3,
+    flags => TRIAD | FLAT,
     notes => [ { coordinate => '1-5', label => 'G' },
                { coordinate => '2-4', label => 'E\flat', border => 1 },
                { coordinate => '3-3', label => 'B\flat' },
@@ -166,7 +208,9 @@ my @diagrams = (
   },
   {
     name => 'E\flatmaj7',
+    caption => 'First Position',    
     fill => 'blue',
+    flags => MAJ7 | FLAT,
     notes => [ { coordinate => '1-5', label => 'G' },
                { coordinate => '2-3', label => 'D' },
                { coordinate => '3-3', label => 'B\flat' },
@@ -175,7 +219,9 @@ my @diagrams = (
   },
   {
     name => 'E',
+    caption => 'First Position',
     fill => 'blue',
+    flags => TRIAD,
     open_strings => { 2 => 1 },
     notes => [ { coordinate => '1-2', label => 'E', border => 1 },
                { coordinate => '3-1', label => 'G\sharp' },
@@ -184,7 +230,9 @@ my @diagrams = (
   },
   {
     name => 'Emaj7',
+    caption => 'First Position',
     fill => 'blue',
+    flags => MAJ7,
     open_strings => { 2 => 1 },
     notes => [ { coordinate => '1-1', label => 'E\sharp' },
                { coordinate => '3-1', label => 'G\sharp' },
@@ -193,7 +241,9 @@ my @diagrams = (
   },
   {
     name => 'F',
+    caption => 'First Position',
     fill => 'blue',
+    flags => TRIAD,
     notes => [ { coordinate => '1-3', label => 'F', border => 1 },
                { coordinate => '2-1', label => 'C' },
                { coordinate => '3-2', label => 'A' },
@@ -202,7 +252,9 @@ my @diagrams = (
   },
   {
     name => 'Fmaj7',
+    caption => 'First Position',    
     fill => 'blue',
+    flags => MAJ7,
     notes => [ { coordinate => '1-2', label => 'E' },
                { coordinate => '2-1', label => 'C' },
                { coordinate => '3-2', label => 'A' },
@@ -211,8 +263,10 @@ my @diagrams = (
   },
   {
     name => 'F\sharp',
+    caption => 'First Position',
     fill => 'blue',
     start_fret => 2,
+    flags => TRIAD | SHARP,
     notes => [ { coordinate => '1-4', label => 'F\sharp', border => 1 },
                { coordinate => '2-2', label => 'C\sharp' },
                { coordinate => '3-3', label => 'A\sharp' },
@@ -221,8 +275,10 @@ my @diagrams = (
   },
   {
     name => 'F\sharpmaj7',
+    caption => 'First Position',
     fill => 'blue',
     start_fret => 2,
+    flags => MAJ7 | SHARP,
     notes => [ { coordinate => '1-3', label => 'F' },
                { coordinate => '2-2', label => 'C\sharp' },
                { coordinate => '3-3', label => 'A\sharp' },
@@ -231,8 +287,10 @@ my @diagrams = (
   },
   {
     name => 'G\flat',
+    caption => 'First Position',
     fill => 'blue',
     start_fret => 2,
+    flags => TRIAD | FLAT,
     notes => [ { coordinate => '1-4', label => 'G\flat', border => 1 },
                { coordinate => '2-2', label => 'D\flat' },
                { coordinate => '3-3', label => 'B\flat' },
@@ -240,8 +298,10 @@ my @diagrams = (
   },
   {
     name => 'G\flatmaj7',
+    caption => 'First Position',
     fill => 'blue',
     start_fret => 2,
+    flags => MAJ7 | FLAT,
     notes => [ { coordinate => '1-3', label => 'F' },
                { coordinate => '2-2', label => 'D\flat' },
                { coordinate => '3-3', label => 'B\flat' },
@@ -249,9 +309,11 @@ my @diagrams = (
   },
   {
     name => 'G',
+    caption => 'First Position',
     fill => 'blue',
     open_strings => { 5 => 1 },
     start_fret => 3,
+    flags => TRIAD,
     notes => [ { coordinate => '1-5', label => 'G', border => 1 },
                { coordinate => '2-3', label => 'D' },
                { coordinate => '3-4', label => 'B' },
@@ -260,13 +322,17 @@ my @diagrams = (
   },
   {
     name => 'Gmaj7',
+    caption => 'First Position',
     fill => 'blue',
+    flags => MAJ7,
     open_strings => { 5 => 1, 4 => 1, 3 => 1, 2 => 1 },
     notes => [ { coordinate => '1-4', label => 'F\sharp' } ]
   },
   {
     name => 'G\sharp',
+    caption => 'First Position',
     fill => 'blue',
+    flags => TRIAD | SHARP,
     notes => [ { coordinate => '1-1', label => 'D\sharp' },
                { coordinate => '2-1', label => 'C' },
                { coordinate => '3-1', label => 'G\sharp', border => 1 },
@@ -274,8 +340,10 @@ my @diagrams = (
   },
   {
     name => 'G\sharpmaj7',
+    caption => 'First Position',
     fill => 'blue',
     start_fret => 3,
+    flags => MAJ7 | SHARP,
     notes => [ { coordinate => '1-5', label => 'F\sharp' },
                { coordinate => '2-4', label => 'D\sharp' },
                { coordinate => '3-5', label => 'B\sharp' },
@@ -325,7 +393,26 @@ foreach my $diagram (@diagrams)
 
 
 generate_makefile(\@fnames);
-generate_anki(\@diagrams);
+
+{
+  my @triads = grep { (($_->{flags} & TRIAD)) == TRIAD } @diagrams;
+  my $text = generate_anki(1694391122062, 'Default (G) Tuning Banjo Chords', \@triads);
+  
+  mkdir "build";
+  open(my $fh, '>', "build/generate_anki_deck_triad.py") or die $!;
+  print $fh $text;
+  close($fh);
+}
+
+{
+  my @maj7s = grep { ($_->{flags} & MAJ7) == MAJ7 } @diagrams;
+  my $text = generate_anki(1694391122063, 'Default (G) Tuning Banjo Major 7th Chords', \@maj7s);
+  
+  mkdir "build";
+  open(my $fh, '>', "build/generate_anki_deck_maj7.py") or die $!;
+  print $fh $text;
+  close($fh);
+}
 
 sub generate_makefile($)
 {
@@ -619,13 +706,16 @@ HERE
   return $template;
 }
 
-sub generate_anki($)
+sub generate_anki($;$;$)
 {
+  my $deck_id = shift;
+  my $deck_name = shift;
   my $diagrams = shift;
-
+  
   my $pyt;
   {
     local $/ = undef;
+    seek DATA, $data_offset, 0;
     $pyt = <DATA>;
   }
 
@@ -645,25 +735,23 @@ sub generate_anki($)
   
   my $interleaved = "";
   my $copy_files = "";
-
+  
   for (my $i=0; $i<=$#syms; ++$i)
   {
     $interleaved .= "  deck.add_note(genanki.Note(model, [ '$syms[$i]', '<img src=\"$pngs[$i]\">' ]))\n";
     $copy_files  .= "  shutil.copy(cwd+'/../Docs/$pngs[$i]', '.')\n";
   }
-
+  
   my $notes = $interleaved . $copy_files;
 
   my $media_files = join ',', map { "'$_'" } @pngs;
-  
+
+
+  $pyt =~ s/__DECK_ID__/$deck_id/;
+  $pyt =~ s/__DECK_NAME__/$deck_name/;
   $pyt =~ s/__MEDIA_FILES__/$media_files/;
   $pyt =~ s/__NOTES__/$notes/;
 
-  mkdir "build";
-  open(my $fh, '>', "build/generate_anki_deck.py") or die $!;
-  print $fh $pyt;
-  close($fh);
-  
   return $pyt;
 }
 
@@ -682,13 +770,13 @@ sys.path.insert(1, '../External/genanki')
 import genanki
 
 def test_media_files_in_subdirs():
-  deck_id = 1694391122062
+  deck_id = __DECK_ID__
 
   # change to a scratch directory so we can write files
   cwd = os.getcwd()
   os.chdir(tempfile.mkdtemp())
   
-  deck = genanki.Deck(deck_id, 'Default (G) Tuning Banjo Chords')
+  deck = genanki.Deck(deck_id, '__DECK_NAME__')
   model = genanki.Model(deck_id, 'Simple Banjo Model',
                         fields=[{ 'name':'Question' }, { 'name':'Answer' }],
                         templates=[{'name': 'Card 1', 'qfmt': '{{Question}}', 'afmt': '{{Answer}}'}])
