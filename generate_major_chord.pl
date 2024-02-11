@@ -368,6 +368,9 @@ foreach my $diagram (@diagrams)
 }
 
 {
+  mkdir "build";
+  mkdir "Docs";
+
   open(my $fh, '>', "build/Docs/Chords.md") or die $!;
   for (my $i=0; $i<=$#diagrams; ++$i)
   {
