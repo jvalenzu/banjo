@@ -8,6 +8,7 @@ sub generate_anki($;$;$);
 
 use constant TRIAD => 0x01;
 use constant MAJ7  => 0x02;
+use constant BARRE => 0x04;
 use constant FLAT  => 0x10;
 use constant SHARP => 0x20;
 my $data_offset = tell DATA;
@@ -348,8 +349,122 @@ my @diagrams = (
                { coordinate => '2-4', label => 'D\sharp' },
                { coordinate => '3-5', label => 'B\sharp' },
                { coordinate => '4-6', label => 'G\sharp', border => 1 } ]
+  },
+  {
+    name => 'open',
+    fill => 'blue',
+    flags => BARRE,
+    open_strings => { 5 => 1, 4 => 1, 3 => 1, 2 => 1, 1 => 1 }
+  },
+  {
+    name => 'first fret',
+    fill => 'blue',
+    flags => BARRE,
+    notes => [ { coordinate => '1-1', label => 'D\sharp' },
+               { coordinate => '2-1', label => 'C' },
+               { coordinate => '3-1', label => 'G\sharp' },
+               { coordinate => '4-1', label => 'D\sharp' } ]
+  },
+  {
+    name => 'second fret',
+    fill => 'blue',
+    flags => BARRE,
+    notes => [ { coordinate => '1-2', label => 'E' },
+               { coordinate => '2-2', label => 'C\sharp' },
+               { coordinate => '3-2', label => 'A' },
+               { coordinate => '4-2', label => 'E' } ]
+  },
+  {
+    name => 'third fret',
+    fill => 'blue',
+    flags => BARRE,
+    notes => [ { coordinate => '1-3', label => 'F' },
+               { coordinate => '2-3', label => 'D' },
+               { coordinate => '3-3', label => 'A\sharp' },
+               { coordinate => '4-3', label => 'F' } ]
+  },
+  {
+    name => 'fourth fret',
+    fill => 'blue',
+    flags => BARRE,
+    notes => [ { coordinate => '1-4', label => 'F\sharp' },
+               { coordinate => '2-4', label => 'D\sharp' },
+               { coordinate => '3-4', label => 'B' },
+               { coordinate => '4-4', label => 'F\sharp' } ]
+  },
+  {
+    name => 'fifth fret',
+    fill => 'blue',
+    flags => BARRE,
+    notes => [ { coordinate => '1-5', label => 'G' },
+               { coordinate => '2-5', label => 'E' },
+               { coordinate => '3-5', label => 'C' },
+               { coordinate => '4-5', label => 'G' } ]
+  },
+  {
+    name => 'sixth fret',
+    fill => 'blue',
+    flags => BARRE,
+    notes => [ { coordinate => '1-6', label => 'G\sharp' },
+               { coordinate => '2-6', label => 'F' },
+               { coordinate => '3-6', label => 'C\sharp' },
+               { coordinate => '4-6', label => 'G\sharp' } ]
+  },
+  {
+    name => 'seventh fret',
+    fill => 'blue',
+    flags => BARRE,
+    notes => [ { coordinate => '1-7', label => 'A' },
+               { coordinate => '2-7', label => 'F\sharp' },
+               { coordinate => '3-7', label => 'D' },
+               { coordinate => '4-7', label => 'A' } ]
+  },
+  {
+    name => 'eighth fret',
+    fill => 'blue',
+    flags => BARRE,
+    notes => [ { coordinate => '1-8', label => 'A\sharp' },
+               { coordinate => '2-8', label => 'G' },
+               { coordinate => '3-8', label => 'D\sharp' },
+               { coordinate => '4-8', label => 'A\sharp' } ]
+  },
+  {
+    name => 'ninth fret',
+    fill => 'blue',
+    flags => BARRE,
+    notes => [ { coordinate => '1-9', label => 'B' },
+               { coordinate => '2-9', label => 'G\sharp' },
+               { coordinate => '3-9', label => 'E' },
+               { coordinate => '4-9', label => 'B' } ]
+  },
+  {
+    name => 'tenth fret',
+    fill => 'blue',
+    flags => BARRE,
+    notes => [ { coordinate => '1-10', label => 'C' },
+               { coordinate => '2-10', label => 'A' },
+               { coordinate => '3-10', label => 'F' },
+               { coordinate => '4-10', label => 'C' } ]
+  },
+  {
+    name => 'eleventh fret',
+    fill => 'blue',
+    flags => BARRE,
+    notes => [ { coordinate => '1-11', label => 'C\sharp' },
+               { coordinate => '2-11', label => 'A\sharp' },
+               { coordinate => '3-11', label => 'F\sharp' },
+               { coordinate => '4-11', label => 'C\sharp' } ]
+  },
+  {
+    name => 'twelvth fret',
+    fill => 'blue',
+    flags => BARRE,
+    notes => [ { coordinate => '1-12', label => 'D' },
+               { coordinate => '2-12', label => 'B' },
+               { coordinate => '3-12', label => 'G' },
+               { coordinate => '4-12', label => 'D' } ]
   }
-    );
+);
 
 my @fnames = ();
 
@@ -369,8 +484,8 @@ foreach my $diagram (@diagrams)
 
 {
   mkdir "build";
-  mkdir "Docs";
-
+  mkdir "build/Docs";
+  
   open(my $fh, '>', "build/Docs/Chords.md") or die $!;
   for (my $i=0; $i<=$#diagrams; ++$i)
   {
@@ -417,6 +532,17 @@ generate_makefile(\@fnames);
   close($fh);
 }
 
+
+{
+  my @barre_chords = grep { ($_->{flags} & BARRE) == BARRE } @diagrams;
+  my $text = generate_anki(1694391122064, 'G Tuning Banjo Notes', \@barre_chords);
+  
+  mkdir "build";
+  open(my $fh, '>', "build/generate_anki_deck_barre.py") or die $!;
+  print $fh $text;
+  close($fh);
+}
+
 sub generate_makefile($)
 {
   my $fnames = shift;
@@ -441,7 +567,7 @@ sub generate_makefile($)
   $out .= "	dvipdf \$<\n";
   $out .= "\n";
   $out .= "\$(DOCSDIR)/%.png : %.pdf\n";
-  $out .= "	convert -density 300 \$< \$\@\n";
+  $out .= "	convert -define png:color-type=6 -density 300 \"\$<[0]\" ../\"\$\@\"\n";
   $out .= "\n";
   $out .= "%.dvi : %.tex\n";
   $out .= "	latex \$<\n";
@@ -493,6 +619,7 @@ sub generate_chord_diagram($)
 \\documentclass[margin=.2cm]{standalone}
 
 \\usepackage{tikz}
+\\usepackage{xfp}
 \\usepackage{algorithm}
 \\usetikzlibrary{calc,arrows}
 
