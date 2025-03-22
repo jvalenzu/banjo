@@ -4,14 +4,18 @@ use strict;
 
 sub generate_chord_diagram($);
 sub generate_makefile($);
-sub generate_anki($;$;$);
+sub generate_anki($;$;$;$;$);
 
-use constant TRIAD => 0x01;
-use constant MAJ7  => 0x02;
-use constant BARRE => 0x04;
-use constant FLAT  => 0x10;
-use constant SHARP => 0x20;
+use constant TRIAD  => 0x01;
+use constant MAJ7   => 0x02;
+use constant BARRE  => 0x04;
+use constant FLAT   => 0x10;
+use constant SHARP  => 0x20;
+use constant SINGLE => 0x40;
 my $data_offset = tell DATA;
+
+use constant GENAKI_FLAG_NONE     => 0x00;
+use constant GENAKI_FLAG_REVERSED => 0x01;
 
 my @diagrams = (
   {
@@ -463,8 +467,379 @@ my @diagrams = (
                { coordinate => '2-12', label => 'B' },
                { coordinate => '3-12', label => 'G' },
                { coordinate => '4-12', label => 'D' } ]
+  },
+  
+  #
+  # single
+  #
+  
+  # open strings
+  {
+    name => 'D (low)',
+    fill => 'blue',
+    flags => SINGLE,
+    open_strings => { 4 => 1 }
+  },
+  {
+    name => 'G',
+    fill => 'blue',
+    flags => SINGLE,
+    open_strings => { 3 => 1 }
+  },
+  {
+    name => 'B',
+    fill => 'blue',
+    flags => SINGLE,
+    open_strings => { 2 => 1 }
+  },
+  {
+    name => 'D (high)',
+    fill => 'blue',
+    flags => SINGLE,
+    open_strings => { 1 => 1 }
+  },
+
+  # first fret
+  {
+    name => 'D (low)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '4-1'} ]
+  },
+  {
+    name => 'G\sharp',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '3-1'} ]
+  },
+  {
+    name => 'C',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '2-1'} ]
+  },
+  {
+    name => 'D\sharp (high)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '1-1'} ]
+  },
+
+  
+  # second string
+  {
+    name => 'E (low)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '4-2'} ]
+  },
+  {
+    name => 'A',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '3-2'} ]
+  },
+  {
+    name => 'C\sharp',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '2-2'} ]
+  },
+  {
+    name => 'E (high)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '1-2'} ]
+  },
+
+  # third string
+  {
+    name => 'F (low)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '4-3'} ]
+  },
+  {
+    name => 'A\sharp',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '3-3'} ]
+  },
+  {
+    name => 'D',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '2-3'} ]
+  },
+  {
+    name => 'F (high)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '1-3'} ]
+  },
+
+  # fourth string
+  {
+    name => 'F\sharp (low)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '4-4'} ]
+  },
+  {
+    name => 'B',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '3-4'} ]
+  },
+  {
+    name => 'D\sharp',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '2-4'} ]
+  },
+  {
+    name => 'F\sharp (high)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '1-4'} ]
+  },
+
+  # fifth string
+  {
+    name => 'G (low)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '4-5'} ]
+  },
+  {
+    name => 'C',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '3-5'} ]
+  },
+  {
+    name => 'E',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '2-5'} ]
+  },
+  {
+    name => 'G (high)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '1-5'} ]
+  },
+
+  # sixth string
+  {
+    name => 'G\sharp (low)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '4-6'} ]
+  },
+  {
+    name => 'C\sharp',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '3-6'} ]
+  },
+  {
+    name => 'F',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '2-6'} ]
+  },
+  {
+    name => 'G\sharp (high)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '1-6'} ]
+  },
+
+  # seventh string
+  {
+    name => 'A (low)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '4-7'} ]
+  },
+  {
+    name => 'D',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '3-7'} ]
+  },
+  {
+    name => 'F\sharp',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '2-7'} ]
+  },
+  {
+    name => 'A (high)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '1-7'} ]
+  },
+
+  # eighth string
+  {
+    name => 'A\sharp (low)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '4-8'} ]
+  },
+  {
+    name => 'D\sharp',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '3-8'} ]
+  },
+  {
+    name => 'G',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '2-8'} ]
+  },
+  {
+    name => 'A\sharp (high)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '1-8'} ]
+  },
+
+  # ninth fret
+  {
+    name => 'B (low)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '4-9'} ]
+  },
+  {
+    name => 'E',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '3-9'} ]
+  },
+  {
+    name => 'G\sharp',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '2-9'} ]
+  },
+  {
+    name => 'B (high)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '1-9'} ]
+  },
+
+  # tenth fret
+  {
+    name => 'C (low)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '4-10'} ]
+  },
+  {
+    name => 'F',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '3-10'} ]
+  },
+  {
+    name => 'A',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '2-10'} ]
+  },
+  {
+    name => 'C (high)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '1-10'} ]
+  },
+
+
+  # eleventh fret
+  {
+    name => 'C\sharp (low)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '4-11'} ]
+  },
+  {
+    name => 'F\sharp',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '3-11'} ]
+  },
+  {
+    name => 'A\sharp',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '2-11'} ]
+  },
+  {
+    name => 'C\sharp (high)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '1-11'} ]
+  },
+
+  # twelfth fret
+  {
+    name => 'D (low)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '4-12'} ]
+  },
+  {
+    name => 'G',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '3-12'} ]
+  },
+  {
+    name => 'B',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '2-12'} ]
+  },
+  {
+    name => 'D (high)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '1-12'} ]
+  },
+
+  # thirteenth fret
+  {
+    name => 'D\sharp (low)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '4-13'} ]
+  },
+  {
+    name => 'G\sharp',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '3-13'} ]
+  },
+  {
+    name => 'C',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '2-13'} ]
+  },
+  {
+    name => 'D\sharp (high)',
+    fill => 'blue',
+    flags => SINGLE,
+    notes => [ { coordinate => '1-13'} ]
   }
 );
+
 
 my @fnames = ();
 
@@ -514,7 +889,7 @@ generate_makefile(\@fnames);
 
 {
   my @triads = grep { (($_->{flags} & TRIAD)) == TRIAD } @diagrams;
-  my $text = generate_anki(1694391122062, 'Default (G) Tuning Banjo Chords', \@triads);
+  my $text = generate_anki('banjo_chords.apkg', 1694391122062, 'Banjo Chords (G Tuning)', GENAKI_FLAG_NONE, \@triads);
   
   mkdir "build";
   open(my $fh, '>', "build/generate_anki_deck_triad.py") or die $!;
@@ -524,7 +899,7 @@ generate_makefile(\@fnames);
 
 {
   my @maj7s = grep { ($_->{flags} & MAJ7) == MAJ7 } @diagrams;
-  my $text = generate_anki(1694391122063, 'Default (G) Tuning Banjo Major 7th Chords', \@maj7s);
+  my $text = generate_anki('banjo_major7_chords.apkg', 1694391122063, 'Banjo Major 7th Chords (G Tuning)', GENAKI_FLAG_NONE, \@maj7s);
   
   mkdir "build";
   open(my $fh, '>', "build/generate_anki_deck_maj7.py") or die $!;
@@ -535,10 +910,20 @@ generate_makefile(\@fnames);
 
 {
   my @barre_chords = grep { ($_->{flags} & BARRE) == BARRE } @diagrams;
-  my $text = generate_anki(1694391122064, 'G Tuning Banjo Notes', \@barre_chords);
+  my $text = generate_anki('banjo_barre_chords.apkg', 1694391122064, 'Banjo Barre Chords (G Tuning)', GENAKI_FLAG_NONE, \@barre_chords);
   
   mkdir "build";
   open(my $fh, '>', "build/generate_anki_deck_barre.py") or die $!;
+  print $fh $text;
+  close($fh);
+}
+
+{
+  my @barre_chords = grep { ($_->{flags} & SINGLE) == SINGLE } @diagrams;
+  my $text = generate_anki('banjo_single_notes.apkg', 1694391122065, 'Banjo Single Notes (G Tuning)', GENAKI_FLAG_REVERSED, \@barre_chords);
+  
+  mkdir "build";
+  open(my $fh, '>', "build/generate_anki_deck_single.py") or die $!;
   print $fh $text;
   close($fh);
 }
@@ -564,13 +949,13 @@ sub generate_makefile($)
   $out .= "test: \$(FINALPNG)\n";
   $out .= "\n";
   $out .= "%.pdf : %.dvi\n";
-  $out .= "	dvipdf \$<\n";
+  $out .= "	dvipdf \"\$<\"\n";
   $out .= "\n";
   $out .= "\$(DOCSDIR)/%.png : %.pdf\n";
   $out .= "	convert -define png:color-type=6 -density 300 \"\$<[0]\" ../\"\$\@\"\n";
   $out .= "\n";
   $out .= "%.dvi : %.tex\n";
-  $out .= "	latex \$<\n";
+  $out .= "	latex \"\$<\"\n";
   $out .= "clean:\n";
   $out .= "\trm -f $pdfs $pngs $dvis $auxs $logs $texes\n";
   $out .= "\n";
@@ -746,7 +1131,7 @@ HERE
   }
   
   my $circle_string = "{".join(',',@circles)."}";
-  my $twelve_string = $last_fret > 12 ? "{12}" : "{}";
+  my $twelve_string = $last_fret >= 12 ? "{12}" : "{}";
 
 $template .= <<HERE;
   %% Draw the inlay circles
@@ -816,7 +1201,7 @@ HERE
   foreach my $note (@{ $notes })
   { 
     my $coordinate = $note->{'coordinate'};
-    my $label = $note->{'label'};
+    my $label = $note->{'label'} || "";
     my $border = defined($note->{'border'}) ? $note->{'border'} : 0;
 
     if ($border)
@@ -836,10 +1221,12 @@ HERE
   return $template;
 }
 
-sub generate_anki($;$;$)
+sub generate_anki($;$;$;$;$)
 {
+  my $package_name = shift;
   my $deck_id = shift;
   my $deck_name = shift;
+  my $flags = shift;
   my $diagrams = shift;
   
   my $pyt;
@@ -848,7 +1235,7 @@ sub generate_anki($;$;$)
     seek DATA, $data_offset, 0;
     $pyt = <DATA>;
   }
-
+  
   my @syms = map
   {
     my $t0 = $_->{'name'};
@@ -856,7 +1243,7 @@ sub generate_anki($;$;$)
     (my $t2 = $t1) =~ s/\\sharp/♯/g;
     $t2;
   } @{ $diagrams };
-
+  
   my @pngs = map
   {
     (my $t0 = $_) =~ s/ /_/g;
@@ -868,19 +1255,27 @@ sub generate_anki($;$;$)
   
   for (my $i=0; $i<=$#syms; ++$i)
   {
-    $interleaved .= "  deck.add_note(genanki.Note(model, [ '$syms[$i]', '<img src=\"$pngs[$i]\">' ]))\n";
+    if (($flags & GENAKI_FLAG_REVERSED) == GENAKI_FLAG_REVERSED)
+    {
+      $interleaved .= "  deck.add_note(genanki.Note(model, [ '<img src=\"$pngs[$i]\">', '$syms[$i]']))\n";
+    }
+    else
+    {
+      $interleaved .= "  deck.add_note(genanki.Note(model, [ '$syms[$i]', '<img src=\"$pngs[$i]\">' ]))\n";
+    }
+    
     $copy_files  .= "  shutil.copy(cwd+'/../Docs/$pngs[$i]', '.')\n";
   }
   
   my $notes = $interleaved . $copy_files;
-
+  
   my $media_files = join ',', map { "'$_'" } @pngs;
-
-
+  
   $pyt =~ s/__DECK_ID__/$deck_id/;
   $pyt =~ s/__DECK_NAME__/$deck_name/;
   $pyt =~ s/__MEDIA_FILES__/$media_files/;
   $pyt =~ s/__NOTES__/$notes/;
+  $pyt =~ s/__APKG_NAME__/$package_name/;
 
   return $pyt;
 }
@@ -915,7 +1310,7 @@ __NOTES__
   
   # populate files with data
   package = genanki.Package(deck, media_files=[ __MEDIA_FILES__ ])
-  package.write_to_file(cwd+'/banjo_chords.apkg')
+  package.write_to_file(cwd+'/__APKG_NAME__')
 
 if __name__ == '__main__':
   test_media_files_in_subdirs()
